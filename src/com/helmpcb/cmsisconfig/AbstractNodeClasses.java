@@ -122,52 +122,7 @@ abstract class Node
                 Node vv = (Node)value;
                 vv.doRender(this, selected, hasFocus);
             }
-
-//            if (value instanceof InputNode) {
-//                //System.out.println(value.getClass().getName());
-//            }
-//            
-//            this.setText(value.toString());
-//            if(value instanceof OptionWithCheckbox)
-//            {
-//                OptionWithCheckbox opc = (OptionWithCheckbox)value;
-//                if(opc.NumericTargets.get(opc.skipValue).getValue(opc.startBit) == 1)
-//                {
-//                    this.setForeground(new Color(0, 160, 0));
-//                }
-//                else
-//                {
-//                    this.setForeground(new Color(160, 60, 0));
-//                }
-//            }
-//            else if(value instanceof HeadingWithEnable)
-//            {
-//                HeadingWithEnable opc = (HeadingWithEnable)value;
-//                if(opc.NumericTargets.get(opc.skipValue).getValue(opc.startBit) == 1)
-//                {
-//                    this.setForeground(new Color(0, 120, 0));
-//                }
-//                else
-//                {
-//                    this.setForeground(new Color(120, 60, 0));
-//                }
-//            }
-//            else
-//            {
-//                    this.setForeground(Color.BLACK);
-//            }
-//            
-////            Font fx = this.getFont();
-//            if(selected)
-//            {
-//                this.setFont(fxbold);
-//            }
-//            else
-//            {
-//                this.setFont(fxfont);
-//            }
             return this;
-
         }
     }
 

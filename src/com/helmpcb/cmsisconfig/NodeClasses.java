@@ -91,11 +91,11 @@ class HeadingWithEnable
         drawer.setText(toString());
         if(Node.NumericTargets.get(skipValue).getValue(startBit) == 0)
         {
-            drawer.setForeground(new Color(0, 120, 0));
+            drawer.setForeground(new Color(120, 60, 0));
         }
         else
         {
-            drawer.setForeground(new Color(120, 60, 0));
+            drawer.setForeground(new Color(0, 120, 0));
         }
         drawer.setFont(isSelected ? fxbold : fxfont);
     }
@@ -151,11 +151,11 @@ class OptionWithCheckbox
         drawer.setFont(isSelected ? fxbold : fxfont);
         if(Node.NumericTargets.get(skipValue).getValue(startBit) == 0)
         {
-            drawer.setForeground(new Color(0, 160, 0));
+            drawer.setForeground(new Color(160, 60, 0));
         }
         else
         {
-            drawer.setForeground(new Color(160, 60, 0));
+            drawer.setForeground(new Color(0, 160, 0));
         }
     }
 }
