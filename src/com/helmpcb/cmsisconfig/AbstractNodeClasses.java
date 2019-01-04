@@ -4,7 +4,9 @@
  */
 package com.helmpcb.cmsisconfig;
 
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -23,6 +25,9 @@ abstract class Node
     protected String tag;
     protected String text;
     protected String tooltip;
+    protected static Font fxfont;
+    protected static Font fxbold;
+    private static boolean IsFontBuilt = false;
     public static ArrayList<NumericTarget> NumericTargets = new ArrayList<NumericTarget>();
     public static ArrayList<StringTarget> StringTargets = new ArrayList<StringTarget>();
 
@@ -71,9 +76,37 @@ abstract class Node
         }
     }
 
-    public static class NodeRenderer
-            extends DefaultTreeCellRenderer {
+    public Node(String tag, String text) {
+        super();
+        this.tag = tag;
+        this.text = text;
+        SetupRender();
+    }
 
+    public void addToolTip(String tooltip) {
+        this.tooltip += tooltip;
+    }
+    
+    // default render the text
+    public final void SetupRender()
+    {
+        if(!IsFontBuilt)
+        {
+                IsFontBuilt = true;
+                fxbold = new Font(Font.SANS_SERIF, Font.BOLD, 12);
+                fxfont = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
+        }
+    }
+
+    // by default draw in black with no effects
+    public void doRender(DefaultTreeCellRenderer drawer, boolean isSelected, boolean hasFocus)
+    {
+        drawer.setText(toString());
+        drawer.setFont(isSelected ? fxbold : fxfont);
+        drawer.setForeground(Color.BLACK);
+    }
+    
+    public static class NodeRender  extends DefaultTreeCellRenderer {
         @Override
         public Component getTreeCellRendererComponent(
                 JTree tree,
@@ -83,26 +116,61 @@ abstract class Node
                 boolean leaf,
                 int row,
                 boolean hasFocus) {
-
-            if (value instanceof InputNode) {
-                //System.out.println(value.getClass().getName());
-            }
             
-            this.setText(value.toString());
+            if(value instanceof Node)
+            {
+                Node vv = (Node)value;
+                vv.doRender(this, selected, hasFocus);
+            }
+
+//            if (value instanceof InputNode) {
+//                //System.out.println(value.getClass().getName());
+//            }
+//            
+//            this.setText(value.toString());
+//            if(value instanceof OptionWithCheckbox)
+//            {
+//                OptionWithCheckbox opc = (OptionWithCheckbox)value;
+//                if(opc.NumericTargets.get(opc.skipValue).getValue(opc.startBit) == 1)
+//                {
+//                    this.setForeground(new Color(0, 160, 0));
+//                }
+//                else
+//                {
+//                    this.setForeground(new Color(160, 60, 0));
+//                }
+//            }
+//            else if(value instanceof HeadingWithEnable)
+//            {
+//                HeadingWithEnable opc = (HeadingWithEnable)value;
+//                if(opc.NumericTargets.get(opc.skipValue).getValue(opc.startBit) == 1)
+//                {
+//                    this.setForeground(new Color(0, 120, 0));
+//                }
+//                else
+//                {
+//                    this.setForeground(new Color(120, 60, 0));
+//                }
+//            }
+//            else
+//            {
+//                    this.setForeground(Color.BLACK);
+//            }
+//            
+////            Font fx = this.getFont();
+//            if(selected)
+//            {
+//                this.setFont(fxbold);
+//            }
+//            else
+//            {
+//                this.setFont(fxfont);
+//            }
             return this;
 
         }
     }
 
-    public Node(String tag, String text) {
-        super();
-        this.tag = tag;
-        this.text = text;
-    }
-
-    public void addToolTip(String tooltip) {
-        this.tooltip += tooltip;
-    }
 
     @Override
     public String toString() {

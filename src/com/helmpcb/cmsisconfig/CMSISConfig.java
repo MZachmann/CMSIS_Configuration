@@ -80,6 +80,7 @@ public class CMSISConfig extends javax.swing.JFrame implements TreeSelectionList
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
         tree.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        tree.setCellRenderer(new Node.NodeRender());
         jScrollPane1.setViewportView(tree);
 
         editorPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());

@@ -141,6 +141,9 @@
               <TreeModel code=""/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="    tree.setCellRenderer(new Node.NodeRender());"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

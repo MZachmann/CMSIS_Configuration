@@ -4,6 +4,7 @@
  */
 package com.helmpcb.cmsisconfig;
 
+import static com.helmpcb.cmsisconfig.Node.fxfont;
 import java.awt.Color;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -18,6 +19,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.DefaultFormatter;
 import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.tree.DefaultTreeCellRenderer;
 
 /**
  *
@@ -82,6 +84,21 @@ class HeadingWithEnable
             Node.NumericTargets.get(skipValue).setValue(0, startBit);
         }
     }
+    
+    @Override
+    public void doRender(DefaultTreeCellRenderer drawer, boolean isSelected, boolean hasFocus)
+    {
+        drawer.setText(toString());
+        if(Node.NumericTargets.get(skipValue).getValue(startBit) == 0)
+        {
+            drawer.setForeground(new Color(0, 120, 0));
+        }
+        else
+        {
+            drawer.setForeground(new Color(120, 60, 0));
+        }
+        drawer.setFont(isSelected ? fxbold : fxfont);
+    }
 }
 
 class OptionWithCheckbox
@@ -124,6 +141,21 @@ class OptionWithCheckbox
             Node.NumericTargets.get(skipValue).setValue(1, startBit);
         } else {
             Node.NumericTargets.get(skipValue).setValue(0, startBit);
+        }
+    }
+    
+        @Override
+    public void doRender(DefaultTreeCellRenderer drawer, boolean isSelected, boolean hasFocus)
+    {
+        drawer.setText(toString());
+        drawer.setFont(isSelected ? fxbold : fxfont);
+        if(Node.NumericTargets.get(skipValue).getValue(startBit) == 0)
+        {
+            drawer.setForeground(new Color(0, 160, 0));
+        }
+        else
+        {
+            drawer.setForeground(new Color(160, 60, 0));
         }
     }
 }
