@@ -16,4 +16,4 @@ Anyway, this is mainly the original code with colors showing checkbox values so 
 |Light Red|Choice|Checked off|
 |Light Green|Choice|Checked on|
 
-[[https://github.com/MZachmann/CMSIS_Configuration/blob/master/CMSIS_Upgrade.JPG|alt=a_picture]]
+[[https://github.com/MZachmann/CMSIS_Configuration/blob/master/CMSIS_Upgrade.JPG]]
