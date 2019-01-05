@@ -199,6 +199,15 @@ class StringOption
         textField.setText(Node.StringTargets.get(skipValue).getStringValue());
         return control;
     }
+    
+    @Override
+    public void doRender(DefaultTreeCellRenderer drawer, boolean isSelected, boolean hasFocus)
+    {
+        drawer.setForeground(Color.BLACK);
+        drawer.setFont(fxfont);
+        drawer.setText(toString() + "'" + Node.StringTargets.get(skipValue).getStringValue() + "'");
+    }
+
 
     private class TextFieldDocumentListener
             implements DocumentListener {
@@ -256,10 +265,15 @@ class NumericOption
             long value = arithmeticModifier.getModifiedValueFromTarget(
                             Node.NumericTargets.get(skipValue).getValue(startBit, endBit));
             String numval;
-            if(SelectionValues.size() > 0 && value >=0 && value < SelectionValues.size())
+            if(SelectionValues.size() > 0)
             {
-                SelectionValueModifier smod = SelectionValues.get((int)value);
-                numval = smod.text;
+                int idx = findMatchingSelectionValueModifier(value);
+                if( idx >= 0 && idx < SelectionValues.size())
+                {
+                    numval = '*' + SelectionValues.get(idx).text; // indicate match
+                }
+                else
+                    numval = Long.toString(value);
             }
             else
                 numval = Long.toString(value);
