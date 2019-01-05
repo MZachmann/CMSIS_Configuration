@@ -87,14 +87,14 @@ abstract class Node
         this.tooltip += tooltip;
     }
     
-    // default render the text
+    // create the plain and bold fonts
     public final void SetupRender()
     {
         if(!IsFontBuilt)
         {
-                IsFontBuilt = true;
-                fxbold = new Font(Font.SANS_SERIF, Font.BOLD, 12);
-                fxfont = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
+            IsFontBuilt = true;
+            fxbold = new Font(Font.SANS_SERIF, Font.BOLD, 12).deriveFont(11.5f);    // since bold is bigger
+            fxfont = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
         }
     }
 
@@ -116,7 +116,7 @@ abstract class Node
                 boolean leaf,
                 int row,
                 boolean hasFocus) {
-            
+            // here's where we let a node render itself
             if(value instanceof Node)
             {
                 Node vv = (Node)value;

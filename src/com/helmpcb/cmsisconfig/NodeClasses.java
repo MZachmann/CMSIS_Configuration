@@ -88,7 +88,6 @@ class HeadingWithEnable
     @Override
     public void doRender(DefaultTreeCellRenderer drawer, boolean isSelected, boolean hasFocus)
     {
-        drawer.setText(toString());
         if(Node.NumericTargets.get(skipValue).getValue(startBit) == 0)
         {
             drawer.setForeground(new Color(120, 60, 0));
@@ -98,6 +97,7 @@ class HeadingWithEnable
             drawer.setForeground(new Color(0, 120, 0));
         }
         drawer.setFont(isSelected ? fxbold : fxfont);
+        drawer.setText(toString());
     }
 }
 
@@ -147,7 +147,6 @@ class OptionWithCheckbox
         @Override
     public void doRender(DefaultTreeCellRenderer drawer, boolean isSelected, boolean hasFocus)
     {
-        drawer.setText(toString());
         drawer.setFont(isSelected ? fxbold : fxfont);
         if(Node.NumericTargets.get(skipValue).getValue(startBit) == 0)
         {
@@ -157,6 +156,7 @@ class OptionWithCheckbox
         {
             drawer.setForeground(new Color(0, 160, 0));
         }
+        drawer.setText(toString());
     }
 }
 
@@ -176,7 +176,7 @@ class StringOption
     }
 
     private void generateControl() {
-        JTextField textField = new JTextField(30);
+        JTextField textField = new JTextField(40);
         textField.getDocument().addDocumentListener(new TextFieldDocumentListener());
         control = textField;
     }
@@ -231,6 +231,32 @@ class NumericOption
         if (endBit != -1 && endBit <= startBit) {
             // Invalid end bit
             throw new NodeException("End bit cannot be smaller than start bit: " + tag);
+        }
+    }
+
+    @Override
+    public void doRender(DefaultTreeCellRenderer drawer, boolean isSelected, boolean hasFocus)
+    {
+        drawer.setForeground(Color.BLACK);
+        drawer.setFont(isSelected ? fxbold : fxfont);
+        if(arithmeticModifier != null)
+        {
+            long value = arithmeticModifier.getModifiedValueFromTarget(
+                            Node.NumericTargets.get(skipValue).getValue(startBit, endBit));
+            String numval;
+            if(SelectionValues.size() > 0 && value >=0 && value < SelectionValues.size())
+            {
+                SelectionValueModifier smod = SelectionValues.get((int)value);
+                numval = smod.text;
+            }
+            else
+                numval = Long.toString(value);
+               
+            drawer.setText(toString() + '[' + numval + ']');
+        }
+        else
+        {
+            drawer.setText(toString());
         }
     }
 

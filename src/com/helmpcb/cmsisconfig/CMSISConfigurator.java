@@ -193,6 +193,7 @@ class CMSISConfigurator {
                     Node.generate(tagMatcher.group(1), tagMatcher.group(2).trim());
             // Let's see how we place the node in the tree
             if (node != null) {
+                
                 if (node instanceof ModifierNode) {
                     // This is a modifier tag. Let's see if the last node in
                     // the tree can accept modifiers
