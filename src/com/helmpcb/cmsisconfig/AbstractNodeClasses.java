@@ -8,12 +8,15 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JComponent;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
+import javax.swing.tree.TreeNode;
 
 /**
  *
@@ -172,6 +175,51 @@ abstract class InputNode
 
     public int getSkipValue() {
         return skipValue;
+    }
+    
+    // this strange method sees if we have a value
+    // by checking children (if they exist) or sibling (if they dont)
+    // if the child points to the same data then there was no data here
+    // this allows commenting out a value in a definition section which is needed for legacy junk
+    protected boolean hasValue() {
+        
+        // check first child
+        if( this.allowsChildren && this.children.size() > 0)
+        {
+            TreeNode tx = this.children.elementAt(0);
+            if(tx instanceof InputNode)
+            {
+                InputNode trx = (InputNode)tx;
+                return skipValue != trx.skipValue;
+            }
+        }
+        
+        // check sibling
+        if(this.parent != null)
+        {
+            boolean didme = false;
+            Enumeration<? extends TreeNode> rex = this.parent.children();
+            while( rex.hasMoreElements())
+            {
+                if(didme)
+                {
+                    // the next iterator is our sibling to test
+                    TreeNode tnx = rex.nextElement();
+                    if(tnx instanceof InputNode)
+                    {
+                        InputNode trx = (InputNode)tnx;
+                        return skipValue != trx.skipValue;
+                    }
+                }
+                else
+                {
+                    didme = (this == rex.nextElement());
+                }
+            }
+        }
+        
+        // there was no one to compare to, so default to yes
+        return true;
     }
 
     private InputNode.TagInfo extractTagInfo() throws NodeException {

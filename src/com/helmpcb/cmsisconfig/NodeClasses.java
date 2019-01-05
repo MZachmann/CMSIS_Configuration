@@ -10,6 +10,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.*;
@@ -19,7 +20,9 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.DefaultFormatter;
 import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
+import javax.swing.tree.TreeNode;
 
 /**
  *
@@ -59,7 +62,7 @@ class HeadingWithEnable
         checkBox.addItemListener(this);
         control = checkBox;
     }
-
+    
     @Override
     public JComponent getControl() {
         JCheckBox checkBox = (JCheckBox) control;
@@ -88,7 +91,12 @@ class HeadingWithEnable
     @Override
     public void doRender(DefaultTreeCellRenderer drawer, boolean isSelected, boolean hasFocus)
     {
-        if(Node.NumericTargets.get(skipValue).getValue(startBit) == 0)
+        long nodeVal = Node.NumericTargets.get(skipValue).getValue(startBit);
+        if(!hasValue())
+        {
+            drawer.setForeground(new Color(144, 144, 144));
+        }
+        else if(nodeVal == 0)
         {
             drawer.setForeground(new Color(120, 60, 0));
         }
@@ -148,7 +156,11 @@ class OptionWithCheckbox
     public void doRender(DefaultTreeCellRenderer drawer, boolean isSelected, boolean hasFocus)
     {
         drawer.setFont(isSelected ? fxbold : fxfont);
-        if(Node.NumericTargets.get(skipValue).getValue(startBit) == 0)
+        if(!hasValue())
+        {
+            drawer.setForeground(new Color(144, 144, 144));
+        }
+        else if(Node.NumericTargets.get(skipValue).getValue(startBit) == 0)
         {
             drawer.setForeground(new Color(160, 60, 0));
         }
